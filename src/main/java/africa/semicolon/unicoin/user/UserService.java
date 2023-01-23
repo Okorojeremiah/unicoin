@@ -6,5 +6,8 @@ public interface UserService {
     public String createAccount(User user);
 
     void enableUser(String emailAddress);
+    String login(LoginRequest loginRequest);
+
+    String changePassword(ChangePasswordRequest changePasswordRequest);
 
 }
