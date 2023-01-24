@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import PropTypes from 'prop-types';
 
 async function loginUser(credentials) {
   return fetch('https://www.mecallapi.com/api/login', {
@@ -12,7 +12,7 @@ async function loginUser(credentials) {
     .then(data => data.json())
   }
 
-function Login() {
+function Login({setToken}) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,11 +23,12 @@ function Login() {
       email,
       password
     })
+    setToken(token);
   }
 
   return(
     <div className="form-group">
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <label>Email</label>
           <input 
             type="text"
@@ -35,55 +36,28 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
             />
         <labe>Password</labe>
-          <input type="text"
+          <input type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           
           />   
+          <div>
+          <button
+          type='submit'
+          value={email}
+          onClick={handleSubmit}
+          >
+          Submit</button>   
+          </div>
       </form>
-      <button
-        type='submit'
-        value={email}
-        onClick={handleSubmit}
       
-        >Submit</button>   
     </div>
   )
 
 }
 
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
+}
+
 export default Login
-
-// export default function Login() {
-//   const [email, setEmail] = useState();
-//   const [password, setPassword] = useState();
-
-//   const handleSubmit = async e => {
-//     e.preventDefault();
-//     const response = await loginUser({
-//       email,
-//       password
-//     })
-//   }
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <label>Enter email:
-//       <input 
-//         type="text" 
-//         name="username" 
-//         // value={inputs.email || ""} 
-//         // onChange={handleSubmit={emailSubmit}}
-//       />
-//       </label>
-//       <label>Enter password:
-//         <input 
-//           type="number" 
-//           name="age" 
-//           // value={inputs.age || ""} 
-//           // onChange={handleChange}
-//         />
-//         </label>
-//         <input type="submit" />
-//     </form>
-//   )
-// }
